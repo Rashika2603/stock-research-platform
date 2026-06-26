@@ -25,6 +25,11 @@ for ticker in tickers:
         progress=False      
     )
 
+    # Remove the extra MultiIndex header created by yfinance
+    if df.columns.nlevels > 1:
+        df.columns = df.columns.droplevel(1)
+
+    # Save clean CSV
     df.to_csv(f"data/raw/{ticker}.csv")
 
     print(f"{ticker} saved. Shape: {df.shape}")
